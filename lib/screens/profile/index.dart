@@ -59,6 +59,7 @@ class ProfileScreen extends StatelessWidget {
                         borderWidth: 1,
                         child: UFUNetworkImage(
                           src: controller.profileImage.value,
+                          boxFit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -79,67 +80,81 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 50),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: UFUInputBox(
-                      inputBoxController: controller.firstNameTextController,
-                      fillColor: AppTheme.themeColors.base,
-                      type: UFUInputBoxType.withoutLabel,
-                      disabled: controller.isEdit.isFalse,
-                      isRequired: true,
-                      hintText: "First Name",
-                      validator: (val) => UFUtils.phoneValidator(val, isRequired: true),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    flex: 1,
-                    child: UFUInputBox(
-                      inputBoxController: controller.lastNameTextController,
-                      fillColor: AppTheme.themeColors.base,
-                      type: UFUInputBoxType.withoutLabel,
-                      disabled: controller.isEdit.isFalse,
-                      hintText: "Last Name",
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 10),
-              UFUInputBox(
-                inputBoxController: controller.phoneTextController,
-                fillColor: AppTheme.themeColors.base,
-                type: UFUInputBoxType.withoutLabel,
-                disabled: controller.isEdit.isFalse,
-                hintText: "Phone Number",
-                keyboardType: TextInputType.phone,
-                validator: (val) => UFUtils.phoneValidator(val, isRequired: true),
-                inputFormatters: [ TextInputMask(mask: 'XXXXX XXXXX', placeholder: 'XXXXX XXXXX')],
-              ),
-              const SizedBox(height: 10),
-              UFUInputBox(
-                inputBoxController: controller.emailTextController,
-                fillColor: AppTheme.themeColors.base,
-                type: UFUInputBoxType.withoutLabel,
-                disabled: controller.isEdit.isFalse,
-                hintText: "E-Mail",
-              ),
-              if(controller.isEdit.isTrue) ...[
-                const SizedBox(height: 50),
-                Row(
+              Form(
+                key: controller.formKey,
+                child: Column(
                   children: [
-                    Expanded(flex: 1,
-                      child: UFUButton(colorType: UFUButtonColorType.lightGray,
-                        text: "Cancel", onPressed: controller.toggleIsEdit
-                      )),
-                    const SizedBox(width: 10),
-                    Expanded(flex: 1,
-                      child: UFUButton(text: "Edit", onPressed: () {}
-                    )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: UFUInputBox(
+                            inputBoxController: controller.firstNameTextController,
+                            fillColor: AppTheme.themeColors.base,
+                            type: UFUInputBoxType.withoutLabel,
+                            disabled: controller.isEdit.isFalse,
+                            isRequired: true,
+                            hintText: "First Name",
+                            validator: (val) => UFUtils.textValidator(val, isRequired: true),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          flex: 1,
+                          child: UFUInputBox(
+                            inputBoxController: controller.lastNameTextController,
+                            fillColor: AppTheme.themeColors.base,
+                            type: UFUInputBoxType.withoutLabel,
+                            disabled: controller.isEdit.isFalse,
+                            hintText: "Last Name",
+                            isRequired: false,
+                            validator: (val) => UFUtils.textValidator(val, isRequired: false),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    UFUInputBox(
+                      inputBoxController: controller.phoneTextController,
+                      fillColor: AppTheme.themeColors.base,
+                      type: UFUInputBoxType.withoutLabel,
+                      disabled: true,
+                      hintText: "Phone Number",
+                      keyboardType: TextInputType.phone,
+                      validator: (val) => UFUtils.phoneValidator(val, isRequired: true),
+                      inputFormatters: [ TextInputMask(mask: 'XXXXX XXXXX', placeholder: 'XXXXX XXXXX')],
+                    ),
+                    const SizedBox(height: 10),
+                    UFUInputBox(
+                      inputBoxController: controller.emailTextController,
+                      fillColor: AppTheme.themeColors.base,
+                      type: UFUInputBoxType.withoutLabel,
+                      disabled: controller.isEdit.isFalse,
+                      hintText: "E-Mail",
+                      isRequired: false,
+                      validator: (val) => UFUtils.emailValidator(val, isRequired: false),
+                    ),
+                    if(controller.isEdit.isTrue) ...[
+                      const SizedBox(height: 50),
+                      Row(
+                        children: [
+                          Expanded(flex: 1,
+                            child: UFUButton(colorType: UFUButtonColorType.lightGray,
+                              text: "Cancel", onPressed: controller.toggleIsEdit
+                          )),
+                          const SizedBox(width: 10),
+                          Expanded(flex: 1,
+                            child: UFUButton(text: "Edit", onPressed: controller.validateForm
+                          )),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
-              ],
+              ),
+
               SizedBox(height: controller.isEdit.isTrue ? 20 : 50),
               UFUButton(text: "Log Out", onPressed: () {}),
             ],

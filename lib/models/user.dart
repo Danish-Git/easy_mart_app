@@ -1,3 +1,7 @@
+import 'package:easy_mart_app/models/media.dart';
+
+import '../core/utils/constants/network.dart';
+
 class UserModel {
 /*
 {
@@ -17,7 +21,8 @@ class UserModel {
   String? email;
   String? firstName;
   String? lastName;
-  String? profilePhoto;
+  MediaModel? profilePhoto;
+  String? avatarUrl;
   String? profilePhotoUrl;
   String? primaryAddress;
   bool? isVerified;
@@ -42,8 +47,11 @@ class UserModel {
     email = json['email']?.toString();
     firstName = json['first_name']?.toString();
     lastName = json['last_name']?.toString();
-    profilePhoto = json['profile_photo']?.toString();
+    profilePhoto = (json['profile_photo'] != null && (json['profile_photo'] is Map))
+        ? MediaModel.fromJson(json['profile_photo']) : null;
     profilePhotoUrl = json['profile_photo_url']?.toString();
+    avatarUrl = profilePhotoUrl?.isNotEmpty ?? false
+        ? "${NetworkConsts.suffixURL}$profilePhotoUrl" : null;
     primaryAddress = json['primary_address']?.toString();
     isVerified = json['is_verified'];
     createdAt = json['created_at']?.toString();

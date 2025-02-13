@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:easy_mart_app/core/utils/constants/network.dart';
+import 'package:easy_mart_app/models/media.dart';
 import 'package:get/get.dart';
 import 'package:universal_flutter_utils/api_config/api_config.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
@@ -19,11 +20,8 @@ class UploadRepo {
         );
 
         if(response?["data"] != null) {
-          String? profileImage = response?["data"]?["image_url"] ?? "";
-          if(profileImage?.isNotEmpty ?? false) {
-            Get.back();
-            return "${NetworkConsts.suffixURL}${profileImage}";
-          }
+          Get.back();
+          return MediaModel.fromJson(response?["data"]);
         }
       }
     } catch(e) {

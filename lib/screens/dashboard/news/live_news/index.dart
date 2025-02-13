@@ -29,14 +29,16 @@ class LiveNewsScreen extends StatelessWidget {
             iconColor: AppTheme.themeColors.text,
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: InkWell(
-                onTap: controller.navigateToProfile,
-                child: const UFUAvatar(
-                  size: UFUAvatarSize.medium,
-                  child: UFUNetworkImage(
-                    src: "https://picsum.photos/400",
+            Obx(() => Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: InkWell(
+                  onTap: controller.navigateToProfile,
+                  child: UFUAvatar(
+                    size: UFUAvatarSize.medium,
+                    child: UFUNetworkImage(
+                      src: controller.user.value?.avatarUrl ?? "",
+                      boxFit: BoxFit.cover ,
+                    ),
                   ),
                 ),
               ),

@@ -22,6 +22,15 @@ class UserRepo {
     return null;
   }
 
+  Future<Map<String, dynamic>?> updateProfile({Map<String, dynamic>? params}) async {
+    try {
+      return await UFApiConfig().post(NetworkConsts.updateProfile, data: params);
+    } catch (e) {
+      UFUtils.handleError(e);
+    }
+    return null;
+  }
+
   Future<Map<String, dynamic>?> verifyOTP({Map<String, dynamic>? params}) async {
     try {
       dynamic response = await UFApiConfig().post(NetworkConsts.verifyOTP, data: params);
