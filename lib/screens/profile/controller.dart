@@ -51,4 +51,18 @@ class ProfileScreenController extends GetxController {
     }
   }
 
+  Future<void> validateForm() async {
+    if (validateItemForm()) {
+
+    } else {
+      scrollToErrorField();
+    }
+  }
+
+  void scrollToErrorField() {
+    if(UFUtils.phoneValidator(phoneTextController.text) != null) {
+      phoneTextController.scrollAndFocus();
+    }
+  }
+
 }

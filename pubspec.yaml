@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
 
   universal_flutter_utils:
-    path: ../../universal_flutter_utils
+    path: ../universal_flutter_utils
   #    git:
   #      url: https://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@github.com/Danish-Git/universal_flutter_utils.git
   #      ref: main

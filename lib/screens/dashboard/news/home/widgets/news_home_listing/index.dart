@@ -24,7 +24,7 @@ class NewsHomeList extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 243,
+              height: 252,
               child: ListView.separated(
                 itemCount: 5,
                 shrinkWrap: true,

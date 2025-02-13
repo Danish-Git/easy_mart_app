@@ -5,12 +5,10 @@ import 'package:universal_flutter_utils/api_config/api_config.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
 import '../core/utils/constants/network.dart';
-import '../models/user.dart';
 
 class UserRepo {
   Future<Map<String, dynamic>?> getUserProfile({Map<String, dynamic>? params}) async {
     try {
-      print(await UFUtils.preferences.readAuthToken());
       dynamic response = await UFApiConfig().get(NetworkConsts.userProfile);
       if(response["data"] != null) {
         await UFUtils.preferences.writeString(UFUtils.preferences.userData, jsonEncode(response["data"]));
