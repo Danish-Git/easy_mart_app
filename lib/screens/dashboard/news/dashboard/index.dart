@@ -4,6 +4,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
 import '../home/index.dart';
+import '../live_news/index.dart';
 import '../post_news/index.dart';
 import 'controller.dart';
 
@@ -28,7 +29,7 @@ class NewsDashboardScreen extends StatelessWidget {
               ),
             ),
             PersistentTabConfig(
-              screen: const UFUText(text: "Live News"),
+              screen: const LiveNewsScreen(),
               item: ItemConfig(
                 icon: const Icon(Icons.podcasts_sharp),
                 title: "Live News",

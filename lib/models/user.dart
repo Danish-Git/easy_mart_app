@@ -1,4 +1,4 @@
-class User {
+class UserModel {
 /*
 {
   "phone": "+911111111111",
@@ -14,6 +14,7 @@ class User {
 */
 
   String? phone;
+  String? email;
   String? firstName;
   String? lastName;
   String? profilePhoto;
@@ -23,8 +24,9 @@ class User {
   String? createdAt;
   String? updatedAt;
 
-  User({
+  UserModel({
     this.phone,
+    this.email,
     this.firstName,
     this.lastName,
     this.profilePhoto,
@@ -35,8 +37,9 @@ class User {
     this.updatedAt,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserModel.fromJson(Map<String, dynamic> json) {
     phone = json['phone']?.toString();
+    email = json['email']?.toString();
     firstName = json['first_name']?.toString();
     lastName = json['last_name']?.toString();
     profilePhoto = json['profile_photo']?.toString();
@@ -50,6 +53,7 @@ class User {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['phone'] = phone;
+    data['email'] = email;
     data['first_name'] = firstName;
     data['last_name'] = lastName;
     data['profile_photo'] = profilePhoto;

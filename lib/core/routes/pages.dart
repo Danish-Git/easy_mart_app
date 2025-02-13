@@ -1,3 +1,4 @@
+import 'package:easy_mart_app/screens/profile/index.dart';
 import 'package:get/get.dart';
 
 import '../../screens/dashboard/news/dashboard/index.dart';
@@ -23,6 +24,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.newsDashboard,
       page: () => const NewsDashboardScreen(),
+    ),
+    GetPage(
+      name: Routes.profile,
+      page: () => const ProfileScreen(),
     ),
   ];
 }
