@@ -1,3 +1,5 @@
+import 'package:easy_mart_app/core/utils/constants/network.dart';
+
 class MediaModel {
 /*
 {
@@ -14,6 +16,7 @@ class MediaModel {
   String? category;
   String? imageName;
   String? imageUrl;
+  String? finalImageUrl;
   String? userId;
   String? uploadedAt;
 
@@ -31,6 +34,7 @@ class MediaModel {
     category = json['category']?.toString();
     imageName = json['image_name']?.toString();
     imageUrl = json['image_url']?.toString();
+    finalImageUrl = "${NetworkConsts.suffixURL}$imageUrl";
     userId = json['user_id']?.toString();
     uploadedAt = json['uploaded_at']?.toString();
   }

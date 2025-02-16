@@ -12,4 +12,6 @@ class NetworkConsts {
   static const String upload = "upload-photo/";
   ///   News
   static const String postNews = "news/post_news/";
+  static const String fetchNews = "news/fetch_news/";
+  static fetchCategories(String lang) => "news-categories/language/$lang/";
 }

@@ -1,9 +1,19 @@
 import 'package:easy_mart_app/core/utils/constants/assets.dart';
+import 'package:easy_mart_app/screens/dashboard/news/home/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
+import '../news_shimmer.dart';
+import '../news_tile.dart';
+
 class NewsHomeList extends StatelessWidget {
-  const NewsHomeList({super.key});
+  const NewsHomeList({
+    super.key,
+    required this.controller
+  });
+
+  final NewsHomeScreenController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +27,10 @@ class NewsHomeList extends StatelessWidget {
               children: [
                 const UFUText(text: "Trending news", fontWeight: UFUFontWeight.bold,),
                 UFUTextButton(
-                    onPressed: () {},
-                    text: "See All",
-                    color: AppTheme.themeColors.secondaryText,
-                  )
+                  onPressed: () {},
+                  text: "See All",
+                  color: AppTheme.themeColors.secondaryText,
+                )
               ],
             ),
             SizedBox(
@@ -98,80 +108,29 @@ class NewsHomeList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const UFUText(text: "Recommended", fontWeight: UFUFontWeight.bold,),
-                  UFUTextButton(
-                    onPressed: () {},
-                    text: "See All",
-                    color: AppTheme.themeColors.secondaryText,
-                  )
+                  if((controller.newsListPagination?.totalItems ?? 0) > (controller.newsListPagination?.pageSize ?? 0))
+                    UFUTextButton(
+                      onPressed: () {},
+                      text: "See All",
+                      color: AppTheme.themeColors.secondaryText,
+                    )
                 ],
               ),
             ),
 
-            ListView.separated(
-              itemCount: 5,
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(top: 10),
-              physics: const NeverScrollableScrollPhysics(),
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const UFUNetworkImage(
-                      src: "https://picsum.photos/400",
-                      height: 120,
-                      width: 120,
-                      boxFit: BoxFit.cover,
-                      borderRadius: 10,
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 115,
-                        padding: const EdgeInsets.only(left: 10),
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            UFUText(
-                              text: "Global Summit on Climate Change: Historic Agreement Reached",
-                              textSize: UFUTextSize.heading4,
-                              fontWeight: UFUFontWeight.bold,
-                              textAlign: TextAlign.start,
-                              maxLine: 3,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Row(
-                                children: [
-                                  UFUSvgImage(
-                                    assetPath: AssetsFiles.miniLogo,
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: UFUText(
-                                        text: "Jun 9, 2023",
-                                        textSize: UFUTextSize.heading4,
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+            controller.isLoadingNews.isTrue
+              ? const NewsShimmer()
+              : ListView.separated(
+                  itemCount: controller.newsList.value?.length ?? 0,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 10),
+                  physics: const NeverScrollableScrollPhysics(),
+                  separatorBuilder: (context, index) => const SizedBox(height: 10),
+                  itemBuilder: (context, index) => NewsTile(
+                    news: controller.newsList.value?[index],
+                    onTap: () {}
+                  ),
                 ),
-              ),
-            ),
 
 
             Padding(

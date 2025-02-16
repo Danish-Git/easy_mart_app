@@ -1,5 +1,6 @@
 import 'package:easy_mart_app/models/media.dart';
 import 'package:easy_mart_app/models/user.dart';
+import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
 class NewsPostModel {
 /*
@@ -39,8 +40,8 @@ class NewsPostModel {
   String? category;
   String? metaTitle;
   String? metaDescription;
-  String? createdAt;
-  String? uploadedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   NewsPostModel({
     this.id,
@@ -58,7 +59,7 @@ class NewsPostModel {
     this.metaTitle,
     this.metaDescription,
     this.createdAt,
-    this.uploadedAt,
+    this.updatedAt,
   });
 
   NewsPostModel.fromJson(Map<String, dynamic> json) {
@@ -70,9 +71,9 @@ class NewsPostModel {
     coverImage = (json['cover_image'] != null && (json['cover_image'] is Map))
         ? MediaModel.fromJson(json['cover_image']) : null;
     priority = int.tryParse(json['priority']?.toString() ?? '');
-    status = json['status'];
-    isFeatured = json['is_featured'];
-    isTrending = json['is_trending'];
+    status = UFUtils.isTrue(json['status']);
+    isFeatured = UFUtils.isTrue(json['is_featured']);
+    isTrending = UFUtils.isTrue(json['is_trending']);
     if (json['keywords'] != null && (json['keywords'] is List)) {
       keywords = <String>[];
       json['keywords'].forEach((v) {
@@ -83,9 +84,10 @@ class NewsPostModel {
     category = json['category']?.toString();
     metaTitle = json['meta_title']?.toString();
     metaDescription = json['meta_description']?.toString();
-    createdAt = json['created_at']?.toString();
-    uploadedAt = json['uploaded_at']?.toString();
+    createdAt = json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
+    updatedAt = json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null;
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
@@ -107,8 +109,8 @@ class NewsPostModel {
     data['category'] = category;
     data['meta_title'] = metaTitle;
     data['meta_description'] = metaDescription;
-    data['created_at'] = createdAt;
-    data['uploaded_at'] = uploadedAt;
+    data['created_at'] = UFUtils.formatCompleteDateTime(createdAt ?? DateTime.now());
+    data['uploaded_at'] = UFUtils.formatCompleteDateTime(updatedAt ?? DateTime.now());
     return data;
   }
 }

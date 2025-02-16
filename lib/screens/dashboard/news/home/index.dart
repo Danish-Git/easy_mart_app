@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
 import 'controller.dart';
+import 'widgets/category_shimmer.dart';
 import 'widgets/news_home_listing/index.dart';
 
 class NewsHomeScreen extends StatelessWidget {
@@ -44,32 +45,36 @@ class NewsHomeScreen extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Container(
-                height: 45,
-                margin: const EdgeInsets.only(bottom: 10),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.filters.length,
-                  separatorBuilder: (context, index) => const SizedBox(width: 10,),
-                  itemBuilder: (context, index) => UFUButton(
-                    onPressed: () => controller.updateSelectedFilter(index),
-                    text: controller.filters[index]["label"],
-                    size: UFUButtonSize.mediumWithIcon,
-                    textSize: UFUTextSize.heading4,
-                    fontWeight: UFUFontWeight.medium,
-                    colorType: controller.selectedFilter?["id"] == controller.filters[index]["id"] ? UFUButtonColorType.secondary : UFUButtonColorType.secondaryLight,
-                    buttonRadius: UFUButtonRadius.roundSquare,
-                  ),
+          child: Obx(() => Column(
+              children: [
 
-                ),
-              ),
+                controller.isLoadingCategories.isTrue
+                  ? const CategoryShimmer()
+                  : Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.categories.value?.length ?? 0,
+                        separatorBuilder: (context, index) => const SizedBox(width: 10,),
+                        itemBuilder: (context, index) => UFUButton(
+                          onPressed: () => controller.updateSelectedFilter(index),
+                          text: controller.categories.value?[index].title,
+                          size: UFUButtonSize.mediumWithIcon,
+                          textSize: UFUTextSize.heading4,
+                          fontWeight: UFUFontWeight.medium,
+                          colorType: controller.selectedCategory?.id == controller.categories.value?[index].id
+                              ? UFUButtonColorType.secondary : UFUButtonColorType.secondaryLight,
+                          buttonRadius: UFUButtonRadius.roundSquare,
+                        ),
+                      ),
+                    ),
 
-              const NewsHomeList()
+                NewsHomeList(controller: controller)
 
-            ],
+              ],
+            ),
           ),
         ),
       ),

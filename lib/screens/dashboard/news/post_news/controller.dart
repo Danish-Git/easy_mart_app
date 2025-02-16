@@ -6,7 +6,7 @@ import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
 import '../../../../core/utils/constants/network.dart';
 import '../../../../models/media.dart';
-import '../../../../models/news_post_model.dart';
+import '../../../../models/news.dart';
 import '../../../../models/user.dart';
 import '../../../../repositories/news.dart';
 import '../../../../repositories/upload.dart';
