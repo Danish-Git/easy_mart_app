@@ -9,8 +9,6 @@ import '../../../../models/user.dart';
 class LiveNewsScreenController extends GetxController {
   Rx<UserModel?> user = Rx(null);
 
-  void navigateToProfile() => Get.toNamed(Routes.profile);
-
   @override
   void onInit() {
     super.onInit();

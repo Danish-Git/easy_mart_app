@@ -10,5 +10,6 @@ class NetworkConsts {
   static const String updateProfile = "user/update_profile/";
   ///   Upload media
   static const String upload = "upload-photo/";
-
+  ///   News
+  static const String postNews = "news/post_news/";
 }

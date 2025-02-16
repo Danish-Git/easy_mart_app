@@ -71,8 +71,9 @@ class ProfileScreen extends StatelessWidget {
                       alignment: Alignment.bottomRight,
                       child: UFUIconButton(
                         onTap: controller.selectImage,
-                        backgroundColor: AppTheme.themeColors.transparent,
+                        backgroundColor: AppTheme.themeColors.base,
                         icon: Icons.camera_alt_rounded,
+                        borderRadius: 50,
                         iconSize: 30,
                       ),
                     ),
