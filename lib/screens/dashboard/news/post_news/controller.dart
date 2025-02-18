@@ -60,7 +60,6 @@ class PostNewsScreenController extends GetxController {
           "language": "en",
           "category": "67a9b1171ac8e33cc84cb298"
         };
-        print(params);
         NewsPostModel? response = await NewsRepo().postNews(params: params);
         if(response != null) {
           await ShowUFUConfirmationDialog(

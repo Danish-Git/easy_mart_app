@@ -1,7 +1,9 @@
+import 'package:easy_mart_app/screens/dashboard/news/news_list/index.dart';
 import 'package:easy_mart_app/screens/profile/index.dart';
 import 'package:get/get.dart';
 
 import '../../screens/dashboard/news/dashboard/index.dart';
+import '../../screens/dashboard/news/news_detail/index.dart';
 import '../../screens/login/index.dart';
 import '../../screens/splash/index.dart';
 import '../../screens/validate_otp/index.dart';
@@ -24,6 +26,14 @@ abstract class AppPages {
     GetPage(
       name: Routes.newsDashboard,
       page: () => const NewsDashboardScreen(),
+    ),
+    GetPage(
+      name: Routes.newsList,
+      page: () => const NewsListScreen(),
+    ),
+    GetPage(
+      name: Routes.newsDetail,
+      page: () => const NewsDetailScreen(),
     ),
     GetPage(
       name: Routes.profile,

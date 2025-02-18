@@ -26,17 +26,18 @@ class NewsHomeList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const UFUText(text: "Trending news", fontWeight: UFUFontWeight.bold,),
-                UFUTextButton(
-                  onPressed: () {},
-                  text: "See All",
-                  color: AppTheme.themeColors.secondaryText,
-                )
+                if((controller.trendingNewsList.value?.length ?? 0) > 2)
+                  UFUTextButton(
+                    onPressed: () => controller.navigateToNewsList(isTrending: true),
+                    text: "See All",
+                    color: AppTheme.themeColors.secondaryText,
+                  )
               ],
             ),
             SizedBox(
               height: 252,
               child: ListView.separated(
-                itemCount: 5,
+                itemCount: controller.trendingNewsList.value?.length ?? 0,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (context, index) => const SizedBox(width: 10),
@@ -47,7 +48,7 @@ class NewsHomeList extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     elevation: 5,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () => controller.navigateToNewsDetail(index, isTrending: true),
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
                         width: 210,
@@ -55,20 +56,20 @@ class NewsHomeList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         padding: const EdgeInsets.all(10),
-                        child: const Column(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             UFUNetworkImage(
-                              src: "https://picsum.photos/400",
+                              src: controller.trendingNewsList.value?[index].coverImage?.finalImageUrl,
                               height: 110,
                               width: 190,
                               boxFit: BoxFit.cover,
                               borderRadius: 10,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 5),
+                              padding: const EdgeInsets.only(top: 5),
                               child: UFUText(
-                                text: "Global Summit on Climate Change: Historic Agreement Reached",
+                                text: controller.trendingNewsList.value?[index].title ?? "",
                                 textSize: UFUTextSize.heading4,
                                 fontWeight: UFUFontWeight.bold,
                                 textAlign: TextAlign.start,
@@ -76,18 +77,18 @@ class NewsHomeList extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.only(top: 10),
                               child: Row(
                                 children: [
-                                  UFUSvgImage(
+                                  const UFUSvgImage(
                                     assetPath: AssetsFiles.miniLogo,
                                     height: 30,
                                     width: 30,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 10),
+                                    padding: const EdgeInsets.only(left: 10),
                                     child: UFUText(
-                                      text: "Jun 9, 2023",
+                                      text: UFUtils.formatDate(controller.trendingNewsList.value?[index].createdAt ?? DateTime.now(), format: "MMMM dd, yyyy") ?? "",
                                       textSize: UFUTextSize.heading4,
                                       textAlign: TextAlign.start,
                                     ),
@@ -110,7 +111,7 @@ class NewsHomeList extends StatelessWidget {
                   const UFUText(text: "Recommended", fontWeight: UFUFontWeight.bold,),
                   if((controller.newsListPagination?.totalItems ?? 0) > (controller.newsListPagination?.pageSize ?? 0))
                     UFUTextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.navigateToNewsList(),
                       text: "See All",
                       color: AppTheme.themeColors.secondaryText,
                     )
@@ -128,7 +129,7 @@ class NewsHomeList extends StatelessWidget {
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
                   itemBuilder: (context, index) => NewsTile(
                     news: controller.newsList.value?[index],
-                    onTap: () {}
+                    onTap: () => controller.navigateToNewsDetail(index)
                   ),
                 ),
 
@@ -140,7 +141,7 @@ class NewsHomeList extends StatelessWidget {
                 children: [
                   const UFUText(text: "Others", fontWeight: UFUFontWeight.bold,),
                   UFUTextButton(
-                    onPressed: () {},
+                    onPressed: () => controller.navigateToNewsList(),
                     text: "See All",
                     color: AppTheme.themeColors.secondaryText,
                   )

@@ -58,7 +58,7 @@ class NewsTile extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: UFUText(
-                              text: UFUtils.formatDate(news?.createdAt ?? DateTime.now()) ?? "Jun 9, 2023",
+                              text: UFUtils.formatDate(news?.createdAt ?? DateTime.now(), format: "MMMM dd, yyyy") ?? "",
                               textSize: UFUTextSize.heading4,
                               textAlign: TextAlign.start,
                             ),

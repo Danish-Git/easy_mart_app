@@ -19,9 +19,10 @@ class NewsRepo {
     return null;
   }
 
-  Future<Map<String, dynamic>?> fetchNews({Map<String, dynamic>? params}) async {
+  Future<Map<String, dynamic>?> fetchNews({Map<String, dynamic>? params, bool? isTrending}) async {
     try {
-      Map<String, dynamic>? response = await UFApiConfig().get(NetworkConsts.fetchNews, queryParameters: params);
+      Map<String, dynamic>? response = await UFApiConfig().get(
+          isTrending ?? false ? NetworkConsts.fetchTrendingNews : NetworkConsts.fetchNews, queryParameters: params);
       if(response?["data"] != null) {
         List<NewsPostModel> newsList = [];
         for (var news in (response?["data"] as List)) {

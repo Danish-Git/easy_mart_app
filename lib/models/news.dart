@@ -1,3 +1,4 @@
+import 'package:easy_mart_app/models/categories.dart';
 import 'package:easy_mart_app/models/media.dart';
 import 'package:easy_mart_app/models/user.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
@@ -37,7 +38,7 @@ class NewsPostModel {
   bool? isTrending;
   List<String?>? keywords;
   String? language;
-  String? category;
+  CategoriesModel? category;
   String? metaTitle;
   String? metaDescription;
   DateTime? createdAt;
@@ -81,7 +82,8 @@ class NewsPostModel {
       });
     }
     language = json['language']?.toString();
-    category = json['category']?.toString();
+    category = (json['category'] != null && (json['category'] is Map))
+        ? CategoriesModel.fromJson(json['category']) : null;
     metaTitle = json['meta_title']?.toString();
     metaDescription = json['meta_description']?.toString();
     createdAt = json['created_at'] != null ? DateTime.parse(json['created_at']) : null;

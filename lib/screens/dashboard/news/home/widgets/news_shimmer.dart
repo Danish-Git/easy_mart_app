@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
 class NewsShimmer extends StatelessWidget {

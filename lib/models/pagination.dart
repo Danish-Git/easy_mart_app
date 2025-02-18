@@ -14,8 +14,8 @@ class PaginationModel {
   int? totalPages;
 
   PaginationModel({
-    this.currentPage,
-    this.pageSize,
+    this.currentPage = 1,
+    this.pageSize = 10,
     this.totalItems,
     this.totalPages,
   });

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:easy_mart_app/core/routes/pages.dart';
 import 'package:get/get.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
