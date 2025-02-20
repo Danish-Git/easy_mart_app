@@ -40,18 +40,20 @@ class NewsDetailScreen extends StatelessWidget {
                     ),
                   ),
                   Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(50, 0, 20, 15),
-                        child: Row(
-                          children: [
-                            UFUButton(
-                              text: controller.news?.category?.title ?? "",
-                              size: UFUButtonSize.extraSmall,
-                              colorType: UFUButtonColorType.secondary,
-                            ),
-                          ],
+                    child: SafeArea(
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(50, 0, 20, 15),
+                          child: Row(
+                            children: [
+                              UFUButton(
+                                text: controller.news?.category?.title ?? "",
+                                size: UFUButtonSize.extraSmall,
+                                colorType: UFUButtonColorType.secondary,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -60,53 +62,55 @@ class NewsDetailScreen extends StatelessWidget {
               ),
             ),
           ],
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                UFUText(
-                  text: controller.news?.title ?? "",
-                  textAlign: TextAlign.start,
-                  textSize: UFUTextSize.heading2,
-                  fontWeight: UFUFontWeight.bold,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    children: [
-                      const UFUSvgImage(
-                        assetPath: AssetsFiles.miniLogo,
-                        height: 30,
-                        width: 30,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: UFUText(
-                            text: UFUtils.formatDate(controller.news?.createdAt ?? DateTime.now(), format: "MMMM dd, yyyy") ?? "",
-                            textSize: UFUTextSize.heading4,
-                            textAlign: TextAlign.start,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  UFUText(
+                    text: controller.news?.title ?? "",
+                    textAlign: TextAlign.start,
+                    textSize: UFUTextSize.heading2,
+                    fontWeight: UFUFontWeight.bold,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Row(
+                      children: [
+                        const UFUSvgImage(
+                          assetPath: AssetsFiles.miniLogo,
+                          height: 30,
+                          width: 30,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: UFUText(
+                              text: UFUtils.formatDate(controller.news?.createdAt ?? DateTime.now(), format: "MMMM dd, yyyy") ?? "",
+                              textSize: UFUTextSize.heading4,
+                              textAlign: TextAlign.start,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Divider(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: UFUText(
-                    text: controller.news?.description ?? "",
-                    textAlign: TextAlign.start,
-                    textSize: UFUTextSize.heading4,
+                  const Padding(
+                    padding: EdgeInsets.only(top: 5),
+                    child: Divider(),
                   ),
-                ),
-                SafeArea(top: false, child: Container())
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: UFUText(
+                      text: controller.news?.description ?? "",
+                      textAlign: TextAlign.start,
+                      textSize: UFUTextSize.heading4,
+                    ),
+                  ),
+                  SafeArea(top: false, child: Container())
+                ],
+              ),
             ),
           )
         )
