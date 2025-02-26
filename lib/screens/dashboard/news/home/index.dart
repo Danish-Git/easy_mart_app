@@ -31,16 +31,50 @@ class NewsHomeScreen extends StatelessWidget {
             iconColor: AppTheme.themeColors.text,
           ),
           actions: [
+
             Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: UFUIconButton(
-                onTap: () {},
-                icon: Icons.translate_outlined,
-                backgroundColor: AppTheme.themeColors.transparent,
-                iconSize: 24,
-                iconColor: AppTheme.themeColors.text,
+              child: UFUPopUpMenuButton(
+                offset: const Offset(-10, 35),
+                popUpMenuButtonChild: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: UFUIcon(
+                    (controller.selectedLanguage?.icon as UFUIcon?)?.icon ?? Icons.translate_outlined,
+                    size: 24,
+                    color: AppTheme.themeColors.text,
+                  )
+                ),
+                itemList: controller.languageList,
+                popUpMenuChild: (PopoverActionModel popoverActionModel) => Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          popoverActionModel.icon ?? UFUIcon(
+                            Icons.translate_outlined,
+                            size: 16,
+                            color: AppTheme.themeColors.text,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: UFUText(text: popoverActionModel.label),
+                          ),
+                        ],
+                      ),
+                      if(popoverActionModel.isSelected)
+                        UFUIcon(
+                          Icons.check,
+                          size: 24,
+                          color: AppTheme.themeColors.secondary,
+                        )
+                    ],
+                  ),
+                ),
+                onTap: controller.onLanguageSelect,
               ),
-            )
+            ),
           ],
         ),
         body: SafeArea(
@@ -49,9 +83,11 @@ class NewsHomeScreen extends StatelessWidget {
             child: Obx(() => Column(
                 children: [
           
-                  controller.isLoadingCategories.isTrue
+                  controller.isLoading.isTrue
                     ? const CategoryShimmer()
-                    : Container(
+                    : UFUtils.isValueNullOrEmpty(controller.categories.value)
+                      ? const SizedBox.shrink()
+                      : Container(
                         height: 45,
                         margin: const EdgeInsets.only(bottom: 10),
                         child: ListView.separated(

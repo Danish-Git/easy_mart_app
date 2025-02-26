@@ -8,4 +8,6 @@ abstract class Routes {
   static const newsList = '/news_list';
   static const newsDetail = '/news_detail';
   static const profile = '/profile';
+  static const videos = '/videos';
+  static const viewVideos = '/view_videos';
 }

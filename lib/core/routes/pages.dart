@@ -1,9 +1,11 @@
 import 'package:easy_mart_app/screens/dashboard/news/news_list/index.dart';
 import 'package:easy_mart_app/screens/profile/index.dart';
 import 'package:get/get.dart';
+import 'package:universal_flutter_utils/widgets/video_player/index.dart';
 
 import '../../screens/dashboard/news/dashboard/index.dart';
 import '../../screens/dashboard/news/news_detail/index.dart';
+import '../../screens/dashboard/news/videos/index.dart';
 import '../../screens/login/index.dart';
 import '../../screens/splash/index.dart';
 import '../../screens/validate_otp/index.dart';
@@ -38,6 +40,14 @@ abstract class AppPages {
     GetPage(
       name: Routes.profile,
       page: () => const ProfileScreen(),
+    ),
+    GetPage(
+      name: Routes.videos,
+      page: () => const VideosScreen(),
+    ),
+    GetPage(
+      name: Routes.viewVideos,
+      page: () => const UFUVideoPlayer(),
     ),
   ];
 }

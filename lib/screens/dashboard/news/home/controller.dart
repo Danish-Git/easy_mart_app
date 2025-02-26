@@ -2,6 +2,7 @@ import 'package:easy_mart_app/core/routes/pages.dart';
 import 'package:easy_mart_app/core/utils/constants/navigation_arguments.dart';
 import 'package:easy_mart_app/models/pagination.dart';
 import 'package:easy_mart_app/repositories/news.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 
@@ -16,31 +17,73 @@ class NewsHomeScreenController extends GetxController {
   PaginationModel? newsListPagination;
 
   CategoriesModel? selectedCategory;
+  PopoverActionModel? selectedLanguage;
 
-  RxBool isLoadingCategories = false.obs;
-  RxBool isLoadingTrending = false.obs;
-  RxBool isLoadingNews = false.obs;
+  RxBool isLoading = false.obs;
+
+  List<PopoverActionModel> languageList = [
+    PopoverActionModel(
+      label: "English",
+      value: "en",
+      icon: UFUIcon(
+        Icons.translate_outlined,
+        size: 16,
+        color: AppTheme.themeColors.text,
+      ),
+    ),
+    PopoverActionModel(
+      label: "Hindi",
+      value: "hi",
+      icon: UFUIcon(
+        Icons.temple_hindu_outlined,
+        size: 16,
+        color: AppTheme.themeColors.text,
+      ),
+    ),
+    PopoverActionModel(
+      label: "Punjabi",
+      value: "pb",
+      icon: UFUIcon(
+        Icons.mosque_outlined,
+        size: 16,
+        color: AppTheme.themeColors.text,
+      ),
+    ),
+  ];
 
   @override
   void onInit() {
     super.onInit();
+    languageList.first.isSelected = true;
+    selectedLanguage = languageList.first;
     selectedCategory = categories.value?.firstOrNull;
+
     loadData();
   }
 
   void loadData() {
     Future.wait(<Future<dynamic>> [
+      Future.delayed(Duration.zero, () => isLoading.value = true),
       fetchCategories(),
     ]).whenComplete(() => Future.wait(<Future<dynamic>> [
-      fetchNews(),
-      fetchTrendingNews(),
-    ]).whenComplete(() => update()));
+      if(selectedCategory != null)...[
+        fetchNews(),
+        fetchTrendingNews(),
+      ]
+    ]).whenComplete(() {
+      isLoading.value = false;
+      if(selectedCategory == null) {
+        trendingNewsList.value = [];
+        newsList.value = [];
+        newsListPagination?.totalItems = null;
+      }
+      update();
+    }));
   }
 
   Future<void> fetchCategories() async {
     try {
-      isLoadingCategories.value = true;
-      List<CategoriesModel>? response = await NewsRepo().fetchCategories(lang: "en");
+      List<CategoriesModel>? response = await NewsRepo().fetchCategories(lang: selectedLanguage?.value ?? "en");
       if (response != null) {
         categories.value = response;
         selectedCategory = categories.value?.firstOrNull;
@@ -48,16 +91,14 @@ class NewsHomeScreenController extends GetxController {
     } catch (e) {
       UFUtils.handleError(e);
     } finally {
-      isLoadingCategories.value = false;
       update();
     }
   }
 
   Future<void> fetchNews() async {
     try {
-      isLoadingNews.value = true;
       Map<String, dynamic> params = {
-        "language": "en",
+        "language": selectedLanguage?.value ?? "en",
         "category": selectedCategory?.id,
         "page": 1,
         "page_size": 10
@@ -70,15 +111,14 @@ class NewsHomeScreenController extends GetxController {
     } catch (e) {
       UFUtils.handleError(e);
     } finally {
-      isLoadingNews.value = false;
+      update();
     }
   }
 
   Future<void> fetchTrendingNews() async {
     try {
-      isLoadingTrending.value = true;
       Map<String, dynamic> params = {
-        "language": "en",
+        "language": selectedLanguage?.value ?? "en",
         "category": selectedCategory?.id,
         "page": 1,
         "page_size": 10
@@ -90,8 +130,19 @@ class NewsHomeScreenController extends GetxController {
     } catch (e) {
       UFUtils.handleError(e);
     } finally {
-      isLoadingTrending.value = false;
+      update();
     }
+  }
+
+  void onLanguageSelect(PopoverActionModel selectedPopup) {
+    selectedLanguage = selectedPopup;
+
+    for (var item in languageList) {
+      item.isSelected = false;
+    }
+
+    languageList.firstWhere((item) => item.value == selectedPopup.value).isSelected = true;
+    loadData();
   }
 
   Future<void> updateSelectedFilter(int index) async {

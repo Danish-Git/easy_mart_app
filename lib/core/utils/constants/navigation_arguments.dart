@@ -5,4 +5,5 @@ class NavigationArgs {
   static String language = "language";
   static String newsCategory = "news_category";
   static String isTrending = "is_trending";
+  static String videoUrl = "video_url";
 }

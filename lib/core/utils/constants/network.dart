@@ -15,4 +15,6 @@ class NetworkConsts {
   static const String fetchNews = "news/fetch_news/";
   static const String fetchTrendingNews = "news/fetch_trending_news/";
   static fetchCategories(String lang) => "news-categories/language/$lang/";
+  ///   Videos
+  static const String fetchVideos = "videos/get_videos/";
 }

@@ -6,6 +6,7 @@ import 'package:universal_flutter_utils/universal_flutter_utils.dart';
 import '../home/index.dart';
 import '../live_news/index.dart';
 import '../post_news/index.dart';
+import '../videos/index.dart';
 import 'controller.dart';
 
 class NewsDashboardScreen extends StatelessWidget {
@@ -47,7 +48,7 @@ class NewsDashboardScreen extends StatelessWidget {
               ),
             ),
             PersistentTabConfig(
-              screen: const UFUText(text: "Videos"),
+              screen: const VideosScreen(),
               item: ItemConfig(
                 icon: const Icon(Icons.slow_motion_video_sharp),
                 title: "Videos",
