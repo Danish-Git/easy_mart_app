@@ -19,49 +19,13 @@ class NewsDashboardScreen extends StatelessWidget {
       init: NewsDashboardScreenController(),
       builder: (controller) => UFUScaffold(
         body: PersistentTabView(
-          tabs: [
-            PersistentTabConfig(
-              screen: const NewsHomeScreen(),
-              item: ItemConfig(
-                icon: const Icon(Icons.home_outlined),
-                title: "Home",
-                activeForegroundColor: AppTheme.themeColors.primary,
-                activeColorSecondary: AppTheme.themeColors.lightPrimary,
-              ),
-            ),
-            PersistentTabConfig(
-              screen: const LiveNewsScreen(),
-              item: ItemConfig(
-                icon: const Icon(Icons.podcasts_sharp),
-                title: "Live News",
-                activeForegroundColor: AppTheme.themeColors.primary,
-                activeColorSecondary: AppTheme.themeColors.lightPrimary,
-              ),
-            ),
-            PersistentTabConfig(
-              screen: const PostNewsScreen(),
-              item: ItemConfig(
-                icon: const Icon(Icons.post_add_outlined),
-                title: "Post News",
-                activeForegroundColor: AppTheme.themeColors.primary,
-                activeColorSecondary: AppTheme.themeColors.lightPrimary,
-              ),
-            ),
-            PersistentTabConfig(
-              screen: const VideosScreen(),
-              item: ItemConfig(
-                icon: const Icon(Icons.slow_motion_video_sharp),
-                title: "Videos",
-                activeForegroundColor: AppTheme.themeColors.primary,
-                activeColorSecondary: AppTheme.themeColors.lightPrimary,
-              ),
-            ),
-          ],
-          // backgroundColor: AppTheme.themeColors.base,
-
+          controller: controller.tabController, // Controller for tab navigation
+          tabs: controller.getTabs,
           navBarBuilder: (navBarConfig) => Style2BottomNavBar(
             navBarConfig: navBarConfig,
           ),
+          gestureNavigationEnabled: true, // Enables swipe gestures for navigation
+          stateManagement: true,
         ),
       ),
     );

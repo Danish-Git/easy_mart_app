@@ -17,6 +17,8 @@ class NewsHomeScreen extends StatelessWidget {
       builder: (controller) => UFUScaffold(
         appBar: AppBar(
           backgroundColor: AppTheme.themeColors.base,
+          surfaceTintColor: AppTheme.themeColors.base,
+          elevation: 0,
           centerTitle: true,
           title: const UFUText(
             text: "News",

@@ -8,6 +8,8 @@ import '../routes/pages.dart';
 
 PreferredSizeWidget EMAppBar({required String title, VoidCallback? onTapBack, UserModel? user}) => AppBar(
   backgroundColor: AppTheme.themeColors.base,
+  surfaceTintColor: AppTheme.themeColors.base,
+  elevation: 0,
   centerTitle: true,
   title: UFUText(
     text: title,
